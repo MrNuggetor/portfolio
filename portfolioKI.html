@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kelvin Ibhaze | Front-End Developer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0a0f1c;
+    --text: #eaeaea;
+    --accent: #d4af37;
+    --glass: rgba(255,255,255,0.08);
+}
+
+.light {
+    --bg: #f5f5f5;
+    --text: #111;
+    --glass: rgba(255,255,255,0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* ===== 3D BACKGROUND ===== */
+#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -2;
+}
+
+/* ===== CURSOR GLOW ===== */
+.cursor {
+    position: fixed;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(212,175,55,0.25), transparent);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ===== GLASS ===== */
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+}
+
+/* ===== NAVBAR ===== */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 15px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+header.scrolled {
+    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.3);
+}
+
+.logo {
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--text);
+    position: relative;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    left: 0;
+    bottom: -5px;
+    background: var(--accent);
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.toggle {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+/* ===== HERO ===== */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-box {
+    text-align: center;
+    padding: 40px;
+}
+
+.hero img {
+    width: 140px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: var(--accent);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+    padding: 100px 10%;
+}
+
+.section h2 {
+    margin-bottom: 15px;
+    color: var(--accent);
+}
+
+/* ===== ABOUT ===== */
+.about-box {
+    padding: 25px;
+    line-height: 1.7;
+}
+
+/* ===== SKILLS ===== */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill {
+    padding: 10px 15px;
+}
+
+/* ===== PROJECT ===== */
+.card {
+    padding: 20px;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* ===== GAME HUD ===== */
+.game-hud {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    z-index: 1000;
+}
+
+/* ===== ANIMATION ===== */
+.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: 0.7s;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor" id="cursor"></div>
+
+<header id="nav" class="glass">
+    <div class="logo">Kelvin Ibhaze</div>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <span class="toggle" onclick="toggleMode()">🌗</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-box glass">
+        <img src="profile.jpg">
+        <h1>Kelvin <span>Ibhaze</span></h1>
+        <p>Front-End Developer • UI Designer • Creative Builder</p>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section hidden">
+    <div class="glass about-box">
+        <h2>About Me</h2>
+        <p>
+            Kelvin Ibhaze is a passionate front-end web developer focused on building modern,
+            responsive, and interactive web experiences. He specializes in HTML, CSS, and JavaScript,
+            with growing expertise in React and UI design systems.
+            <br><br>
+            He enjoys turning ideas into visually appealing and functional websites, combining creativity
+            with clean code. His goal is to become a world-class front-end engineer building impactful digital products.
+        </p>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section hidden">
+    <h2>Skills</h2>
+    <div class="skills">
+        <div class="skill glass">HTML</div>
+        <div class="skill glass">CSS</div>
+        <div class="skill glass">JavaScript</div>
+        <div class="skill glass">React (Basic)</div>
+        <div class="skill glass">UI Design</div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section hidden">
+    <h2>Projects</h2>
+
+    <div class="glass card">
+        <h3>School Website Prototype</h3>
+        <p>Clean responsive school website built using HTML, CSS, and JavaScript.</p>
+        <a href="#">View Project →</a>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section hidden">
+    <div class="glass about-box">
+        <h2>Contact</h2>
+        <p>Email: worldkelvoo@gmail.com</p>
+        <p>Phone: +234 9130317832</p>
+        <p>LinkedIn: Ibhaze Kelvin</p>
+    </div>
+</section>
+
+<!-- GAME HUD -->
+<div class="game-hud glass">
+    🎮 Score: <span id="score">0</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+// ===== DARK MODE =====
+function toggleMode(){
+    document.body.classList.toggle("light");
+    localStorage.setItem("mode", document.body.classList.contains("light") ? "light":"dark");
+}
+if(localStorage.getItem("mode")==="light") document.body.classList.add("light");
+
+// ===== NAV SCROLL =====
+window.addEventListener("scroll", ()=>{
+    document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 50);
+});
+
+// ===== SCROLL ANIMATION =====
+const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add("show");
+    });
+});
+document.querySelectorAll(".hidden").forEach(el=>obs.observe(el));
+
+// ===== CURSOR GLOW =====
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", e=>{
+    cursor.style.top = e.clientY + "px";
+    cursor.style.left = e.clientX + "px";
+});
+
+// ===== THREE JS PARTICLES (GAME ENABLED) =====
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer({canvas: document.getElementById("bg"), alpha:true});
+renderer.setSize(innerWidth, innerHeight);
+
+const particlesGeometry = new THREE.BufferGeometry();
+const count = 1200;
+
+const pos = new Float32Array(count * 3);
+for(let i=0;i<count*3;i++){
+    pos[i] = (Math.random() - 0.5) * 60;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(pos,3));
+
+const material = new THREE.PointsMaterial({
+    size: 0.08,
+    color: 0xd4af37
+});
+
+const particles = new THREE.Points(particlesGeometry, material);
+scene.add(particles);
+
+camera.position.z = 15;
+
+// ===== GAME =====
+let score = 0;
+const scoreEl = document.getElementById("score");
+
+document.addEventListener("click", ()=>{
+    score++;
+    scoreEl.innerText = score;
+});
+
+// ===== MOUSE CONTROL =====
+let mx = 0, my = 0;
+
+document.addEventListener("mousemove", e=>{
+    mx = (e.clientX / innerWidth - 0.5) * 2;
+    my = (e.clientY / innerHeight - 0.5) * 2;
+});
+
+function animate(){
+    requestAnimationFrame(animate);
+
+    particles.rotation.y += 0.001 + mx * 0.002;
+    particles.rotation.x += 0.001 + my * 0.002;
+
+    renderer.render(scene, camera);
+}
+animate();
+
+// ===== RESPONSIVE =====
+window.addEventListener("resize", ()=>{
+    renderer.setSize(innerWidth, innerHeight);
+    camera.aspect = innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+});
+</script>
+
+</body>
+</html>
